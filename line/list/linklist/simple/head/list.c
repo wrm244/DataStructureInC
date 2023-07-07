@@ -2,8 +2,8 @@
  * @Author: wrm244 wrm244@outlook.com
  * @Date: 2023-06-23 15:39:56
  * @LastEditors: wrm244 wrm244@outlook.com
- * @LastEditTime: 2023-06-23 23:34:19
- * @FilePath: /list/linklist/simple/head/list.c
+ * @LastEditTime: 2023-06-26 08:52:25
+ * @FilePath: /ds/line/list/linklist/simple/head/list.c
  * @Description: 链式线性表的具体方法实现
  * 
  * Copyright © 2023 by RiverMountain, All Rights Reserved. 
@@ -27,7 +27,13 @@ list *list_create()
     me->next = NULL;
     return me;
 }
-
+/**
+ * @description: 基于序列插入数值
+ * @param {list} *me
+ * @param {int} i
+ * @param {datatype} *data
+ * @return {int} 成功返回0，不成功返回其余值
+ */
 int list_insert_at(list *me,int i,datatype *data)
 {
     int j = 0;
@@ -51,6 +57,13 @@ int list_insert_at(list *me,int i,datatype *data)
         return -3;
     }
 }
+
+/**
+ * @description: 插入的话区分上面尾插法头插法，在按顺序插入比较符合生产
+ * @param {list} *me
+ * @param {datatype} *data
+ * @return {int} 成功返回0，不成功返回其余值
+ */
 int list_order_insert(list *me,datatype *data)
 {
     list *p = me,*q;
