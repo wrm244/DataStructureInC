@@ -23,7 +23,6 @@ list *list_create() {
       *me)); // 即使你没有这个语句，程序也可能会执行成功。但是，这是不安全的，因为
              // me->next 将是一个野指针，无法使用。因此，你需要为
              // me->next 分配内存空间。
-  printf("[%s] me->next->next = %p", __FUNCTION__, me->next->next);
   if (me == NULL)
     return NULL;
   me->next = NULL;
@@ -86,7 +85,7 @@ int list_delete_at(list *me, int i, datatype *data) {
     p = p->next;
     j++;
   }
-  if (p) {
+  if (p) { // 找到位置
     q = p->next;
     *data = q->data;
     p->next = q->next;
