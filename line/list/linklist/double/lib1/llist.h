@@ -15,15 +15,16 @@ typedef struct llist_head_st //链表头结构
     int size;
     struct llist_node_st head;
 }LLIST;
+
 typedef void llist_op(const void *);
+typedef int llist_cmp(const void *,const void *);
 LLIST* llist_create(int initsize);
+void * llist_find(LLIST *, const void *key, llist_cmp *cmp);
 int llist_insert(LLIST *, const void *data, int mode);//mode:0头插 1尾插
-/*
-llist_find(LLIST *, const void *key, llist_cmp *cmp);
-llist_destory(LLIST *);
-llist_delete(LLIST *, const void *key, llist_cmp *cmp);
-llist_fetch(LLIST *, const void *key, llist_cmp *cmp);
-*/
+
+int llist_delete(LLIST *, const void *, llist_cmp *);
+int llist_fetch(LLIST *, const void *, llist_cmp *,void *);
+
 void llist_destory(LLIST *);
 void llist_travel(LLIST *, llist_op *op);
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "llist.h"
+#include <string.h>
 #define NAMESIZE 32
 struct score_st{
     int id;
@@ -8,9 +9,19 @@ struct score_st{
     int math;
     int chinese;
 };
-void print_s(const void *data){
+static void print_s(const void *data){
     struct score_st *d = data;//data是void类型的指针，所以要转换成struct score_st类型的指针
     printf("%d %s %d %d\n", d->id, d->name, d->math, d->chinese);
+}
+static int id_cmp(const void *key,const void *record){
+    const int *k = key;
+    const struct score_st *r = record;
+    return (*k - r->id);
+}
+static int name_cmp(const void *key,const void *record){
+    const char *k = key;
+    const struct score_st *r = record;
+    return strcmp(k,r->name);
 }
 int main(){
     LLIST *handler;
@@ -24,10 +35,27 @@ int main(){
         snprintf(tmp.name, NAMESIZE, "stu%d", i);
         tmp.math = rand()%100;
         tmp.chinese = rand()%100;
-        if(llist_insert(handler, &tmp, LLIST_FORWARD) != 0)
+        if(llist_insert(handler, &tmp, LLIST_BACKWARD) != 0)
             exit(1);
     }
     llist_travel(handler,print_s);
+    int id = 3;
+    char *del_name="stu7";
+    int ret = llist_delete(handler,del_name,name_cmp);
+    if(ret)
+        printf("Can not find!\n");
+    else
+        llist_travel(handler,print_s);
+    #if 0
+    printf("\n");
+    int id = 30;
+    struct score *data;
+    data = llist_find(handler,&id,id_cmp);
+    if(data == NULL)
+        printf("Can not find!\n");
+    else
+        print_s(data);
+    #endif
     llist_destory(handler);
     exit(0);
 }
