@@ -26,7 +26,7 @@ static int name_cmp(const void *key,const void *record){
 int main(){
     LLIST *handler;
     struct score_st tmp;
-    int i;
+    int i,ret=0;
     handler = llist_create(sizeof(struct score_st));
     if(handler == NULL)
         exit(1);
@@ -35,10 +35,12 @@ int main(){
         snprintf(tmp.name, NAMESIZE, "stu%d", i);
         tmp.math = rand()%100;
         tmp.chinese = rand()%100;
-        if(llist_insert(handler, &tmp, LLIST_BACKWARD) != 0)
+        ret = llist_insert(handler,&tmp,LLIST_FORWARD);
+        if(ret)
             exit(1);
     }
     llist_travel(handler,print_s);
+    #if 0
     int id = 3;
     char *del_name="stu7";
     int ret = llist_delete(handler,del_name,name_cmp);
@@ -46,7 +48,7 @@ int main(){
         printf("Can not find!\n");
     else
         llist_travel(handler,print_s);
-    #if 0
+    
     printf("\n");
     int id = 30;
     struct score *data;
