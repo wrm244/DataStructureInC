@@ -28,6 +28,7 @@ LLIST* llist_create(int initsize){
     new->size = initsize;
     new->head.prev=&new->head;
     new->head.next=&new->head;//循环链表
+    return new;
 }
 
 
@@ -51,14 +52,14 @@ int llist_insert(LLIST *p, const void *data, int mode){
     }else{
         return -3;
     }
-    newnode->prev->next = newnode;
+    newnode->prev->next = newnode; //这里是插入操作
     newnode->next->prev = newnode;
     return 0;
 }
 
 void llist_destory(LLIST *p){
     struct llist_node_st *cur,*next;
-    struct llist_head_st *ptr = p;
+    struct llist_head_st *ptr = p;//带有头节点循环链表
     for(cur=ptr->head.next;cur!=&ptr->head;cur=next){//cur!=&ptr->head 保证了循环链表的遍历
         next=cur->next;
         free(cur);
